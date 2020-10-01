@@ -202,7 +202,6 @@ public class MyLuteceDatabaseApp implements XPageApplication
     private static final String PROPERTY_PORTAL_NAME = "lutece.name";
     private static final String PROPERTY_NOREPLY_EMAIL = "mail.noreply.email";
     private static final String PROPERTY_MAIL_HOST = "mail.server";
-    private static final String PROPERTY_NO_REPLY_EMAIL = "mail.noreply.email";
     private static final String PROPERTY_ACCOUNT_REF_ENCRYPT_ALGO = "mylutece-database.account_life_time.refEncryptionAlgorythm";
     private static final String PROPERTY_DATABASE_MAIL_LOST_PASSWORD = "mylutece_database_mailLostPassword";
 
@@ -1388,13 +1387,13 @@ public class MyLuteceDatabaseApp implements XPageApplication
                         ReferenceItem referenceItem = _userParamService.findByKey( PARAMETER_MAIL_LOST_PASSWORD_SENDER,
                                 plugin );
                         String strSender = ( referenceItem == null ) ? StringUtils.EMPTY : referenceItem.getName( );
+			String strSenderEmail = AppPropertiesService.getProperty( PROPERTY_NOREPLY_EMAIL );
 
                         referenceItem = _userParamService.findByKey( PARAMETER_MAIL_LOST_PASSWORD_SUBJECT, plugin );
 
                         String strSubject = ( referenceItem == null ) ? StringUtils.EMPTY : referenceItem.getName( );
 
-                        MailService.sendMailHtml( strEmail, PROPERTY_NO_REPLY_EMAIL, strSender, strSubject,
-                                template.getHtml( ) );
+                        MailService.sendMailHtml( strEmail, strSender, strSenderEmail, strSubject, template.getHtml( ) );
                     }
                 }
             }
